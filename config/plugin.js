@@ -6,4 +6,12 @@ module.exports = {
   // static: {
   //   enable: true,
   // }
+  mysql: {
+    enable: true,
+    package: 'egg-mysql',
+  },
+  routerPlus: {
+    enable: true,
+    package: 'egg-router-plus',
+  },
 };
