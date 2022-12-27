@@ -1,8 +1,8 @@
 module.exports = {
-  success(data) {
+  success(message = 'success', data) {
     this.body = {
       code: 200,
-      message: 'success',
+      message,
       data,
     };
   },
