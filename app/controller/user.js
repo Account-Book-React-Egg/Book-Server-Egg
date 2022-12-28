@@ -49,7 +49,7 @@ class UserController extends Controller {
     }
 
     // 为该用户生成 token
-    const jwtToken = app.jwt.sign(
+    const token = app.jwt.sign(
       {
         id: userInfo.id,
         username: userInfo.username,
@@ -57,7 +57,11 @@ class UserController extends Controller {
       },
       app.config.jwt.secret
     );
-    ctx.success('登录成功', { jwtToken });
+    ctx.success('登录成功', { jwtToken: 'Bearer ' + token });
+  }
+
+  async test() {
+    this.ctx.success('token 校验成功');
   }
 }
 module.exports = UserController;

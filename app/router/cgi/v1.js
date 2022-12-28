@@ -2,11 +2,10 @@ module.exports = app => {
   const {
     controller,
     router,
-    //   middleware: { auth, inProject, cgiSignCheck, validateUser },
+    middleware: { validateToken },
   } = app;
 
-  const v1 = router.namespace('/cgi/v1');
+  const v1 = router.namespace('/cgi/v1', validateToken(app.config.jwt.secret));
 
-  v1.post('/register', controller.user.register);
-  v1.post('/login', controller.user.login);
+  v1.post('/test', controller.user.test);
 };
