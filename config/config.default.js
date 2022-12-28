@@ -45,6 +45,11 @@ module.exports = appInfo => {
     agent: false, // 是否加载到 agent 上，默认关闭
   };
 
+  // 自定义加密字符串
+  config.jwt = {
+    secret: 'ZamirZhang1994',
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

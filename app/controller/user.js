@@ -32,5 +32,32 @@ class UserController extends Controller {
     if (result) ctx.success('注册成功');
     ctx.error('注册失败');
   }
+
+  async login() {
+    const { ctx, service, app } = this;
+    const { username, password } = ctx.request.body;
+
+    // 根据用户名，查找该用户
+    const userInfo = await service.user.getUserByName(username);
+    if (!userInfo || !userInfo.userId) {
+      return ctx.error('账号不存在', 401);
+    }
+
+    // 核对账户密码
+    if (userInfo && password !== userInfo.password) {
+      return ctx.error('账号密码错误', 401);
+    }
+
+    // 为该用户生成 token
+    const jwtToken = app.jwt.sign(
+      {
+        id: userInfo.id,
+        username: userInfo.username,
+        exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60, // token 有效期为 24 小时
+      },
+      app.config.jwt.secret
+    );
+    ctx.success('登录成功', { jwtToken });
+  }
 }
 module.exports = UserController;
